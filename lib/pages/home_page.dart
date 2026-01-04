@@ -632,7 +632,7 @@ class _HomePageState extends State<HomePage> {
             content: Text(
               success
                   ? 'Berhasil masuk: ${_firestoreService.getUserEmail() ?? "User"}'
-                  : 'Gagal masuk ke Firebase',
+                  : 'Tidak dapat menghubungkan ke Google',
             ),
           ),
         );
@@ -727,7 +727,7 @@ class _HomePageState extends State<HomePage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             const Text(
-              'Sinkronisasi Firebase',
+              'Sinkronisasi Data',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
@@ -747,7 +747,7 @@ class _HomePageState extends State<HomePage> {
               ListTile(
                 leading: const Icon(Icons.cloud_upload, color: Colors.teal),
                 title: const Text('Backup ke Cloud'),
-                subtitle: const Text('Upload data ke Firestore'),
+                subtitle: const Text('Upload data ke Cloud Storage'),
                 onTap: () {
                   Navigator.pop(context);
                   _syncToFirestore();
@@ -756,7 +756,7 @@ class _HomePageState extends State<HomePage> {
               ListTile(
                 leading: const Icon(Icons.cloud_download, color: Colors.blue),
                 title: const Text('Restore dari Cloud'),
-                subtitle: const Text('Download data dari Firestore'),
+                subtitle: const Text('Download data dari Cloud Storage'),
                 onTap: () {
                   Navigator.pop(context);
                   _restoreFromFirestore();
@@ -784,7 +784,7 @@ class _HomePageState extends State<HomePage> {
                   _handleFirebaseSignIn();
                 },
                 icon: const Icon(Icons.login),
-                label: const Text('Login ke Firebase'),
+                label: const Text('Login ke Google'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.teal,
                   foregroundColor: Colors.white,
