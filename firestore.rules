@@ -1,0 +1,37 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Fungsi helper untuk autentikasi
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+    
+    // Rules untuk data user
+    match /users/{userId}/{document=**} {
+      // User hanya bisa read/write data mereka sendiri
+      allow read, write: if isSignedIn() && isOwner(userId);
+    }
+    
+    // Alternatif: Jika ingin lebih spesifik per collection
+    match /users/{userId}/transactions/{transactionId} {
+      allow read, write: if isSignedIn() && isOwner(userId);
+    }
+    
+    match /users/{userId}/recurring_transactions/{recurringId} {
+      allow read, write: if isSignedIn() && isOwner(userId);
+    }
+    
+    match /users/{userId}/wallet_accounts/{walletId} {
+      allow read, write: if isSignedIn() && isOwner(userId);
+    }
+    
+    match /users/{userId}/settings/{document=**} {
+      allow read, write: if isSignedIn() && isOwner(userId);
+    }
+  }
+}
